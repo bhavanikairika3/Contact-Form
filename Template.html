@@ -1,1 +1,162 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop-up Survey Form</title>
+    <style>
+       .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+        }
+        .popup-container {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: #f9f9f9;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            max-width: 600px;
+            width: 100%;
+            border-radius: 10px;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            text-align: left;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .submit-btn, .reset-btn {
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+        .submit-btn:hover, .reset-btn:hover {
+            background-color: #0056b3;
+        }
+        .close-btn {
+            cursor: pointer;
+            float: right;
+            font-size: 20px;
+            color: #555;
+        }
+        h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body onload="openPopup()">
+    <div class="overlay" id="overlay"></div>
+    <div class="popup-container" id="popup">
+        <span class="close-btn" onclick="closePopup()">X</span>
+        <h2>Survey Form</h2>
+        <form id="surveyForm">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName">
+            
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName">
+            
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob">
+            
+            <label for="country">Country:</label>
+            <select id="country">
+                <option value="India">India</option>
+            </select>
+            
+            <label>Gender:</label>
+            <input type="radio" id="male" name="gender"><label for="male">Male</label>
+            <input type="radio" id="female" name="gender"><label for="female">Female</label>
+            
+            <label for="profession">Profession:</label>
+            <input type="text" id="profession">
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email">
+            
+            <label for="mobile">Mobile Number:</label>
+            <input type="tel" id="mobile">
+            
+            <button type="button" class="submit-btn" onclick="submitForm()">Submit</button>
+            <button type="button" class="reset-btn" onclick="resetForm()">Reset</button>
+        </form>
+        <div id="successMessage" style="display: none;">
+            <p>Submitted Successfully!</p>
+            <button type="button" class="new-response-btn" onclick="newResponse()">Enter Another Response</button>
+        </div>
+    </div>
 
+    <script>
+        function openPopup() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function submitForm() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const dob = document.getElementById('dob').value;
+            const country = document.getElementById('country').value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const profession = document.getElementById('profession').value;
+            const email = document.getElementById('email').value;
+            const mobile = document.getElementById('mobile').value;
+            
+            const summary = `
+                First Name: ${firstName}<br>
+                Last Name: ${lastName}<br>
+                Date of Birth: ${dob}<br>
+                Country: ${country}<br>
+                Gender: ${gender}<br>
+                Profession: ${profession}<br>
+                Email: ${email}<br>
+                Mobile Number: ${mobile}
+            `;
+            document.getElementById('popup').innerHTML = `
+                <span class="close-btn" onclick="closePopup()">X</span>
+                <h2>Survey Summary</h2>
+                <p>${summary}</p>
+            `;
+            document.getElementById('successMessage').style.display = 'block';
+        }
+
+        function resetForm() {
+            document.getElementById('surveyForm').reset();
+        }
+
+        function newResponse() {
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('surveyForm').reset();
+            openPopup();
+        }
+    </script>
+</body>
+</html>
