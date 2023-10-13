@@ -75,31 +75,23 @@
         <form id="surveyForm">
             <label for="firstName">First Name:</label>
             <input type="text" id="firstName">
-            
             <label for="lastName">Last Name:</label>
             <input type="text" id="lastName">
-            
             <label for="dob">Date of Birth:</label>
             <input type="date" id="dob">
-            
             <label for="country">Country:</label>
             <select id="country">
                 <option value="India">India</option>
             </select>
-            
             <label>Gender:</label>
             <input type="radio" id="male" name="gender"><label for="male">Male</label>
             <input type="radio" id="female" name="gender"><label for="female">Female</label>
-            
             <label for="profession">Profession:</label>
             <input type="text" id="profession">
-            
             <label for="email">Email:</label>
             <input type="email" id="email">
-            
             <label for="mobile">Mobile Number:</label>
             <input type="tel" id="mobile">
-            
             <button type="button" class="submit-btn" onclick="submitForm()">Submit</button>
             <button type="button" class="reset-btn" onclick="resetForm()">Reset</button>
         </form>
@@ -113,12 +105,10 @@
             document.getElementById('overlay').style.display = 'block';
             document.getElementById('popup').style.display = 'block';
         }
-
         function closePopup() {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('popup').style.display = 'none';
         }
-
         function submitForm() {
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
@@ -128,7 +118,6 @@
             const profession = document.getElementById('profession').value;
             const email = document.getElementById('email').value;
             const mobile = document.getElementById('mobile').value;
-            
             const summary = `
                 First Name: ${firstName}<br>
                 Last Name: ${lastName}<br>
@@ -146,11 +135,9 @@
             `;
             document.getElementById('successMessage').style.display = 'block';
         }
-
         function resetForm() {
             document.getElementById('surveyForm').reset();
         }
-
         function newResponse() {
             document.getElementById('successMessage').style.display = 'none';
             document.getElementById('surveyForm').reset();
