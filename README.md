@@ -1,123 +1,39 @@
 ```html
-Creating a basic calculator using HTML, CSS, and JavaScript with the functionality of add, 
-subtract, multiply and divide.
+Creating a survey form with Fields; First Name, Last Name, Date of Birth, Country 
+(dropdown), Gender (checkbox), Profession, email, and mobile number. All the input 
+fields are necessary to submit the form. Create two buttons Submit and Reset. Reset will 
+reset the form while clicking on submit, first, it will check all the fields and necessary 
+validations and then a popup will appear displaying all the selected values with labels in 
+front of it. On closing the popup, the form should reset all the values.
 
-Let's Understand the Coding Part : 
+Let's Understand the coding part now :
 
-<html lang="en">   =  This line specifies that the document is in English (en). The <html> tag is the root element of the HTML document and contains all the other HTML elements on the page.
+<html lang="en">  =  This line declares the document type and specifies the language of the content as English.
 
-<head> = The <head> section contains meta-information about the HTML document, such as the character encoding, viewport settings, and the title of the web page.
+<head>
+    <!-- Meta tags and title -->
+</head>  =  The head section typically contains meta tags and the title of the webpage, which are not provided in this specific code snippet.
 
-<meta charset="UTF-8">  = This line specifies the character encoding for the document, ensuring that special characters are displayed correctly.
+<body onload="openPopup()">  =  This line specifies the body of the HTML document. The onload attribute calls the openPopup() function when the page finishes loading.
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  =  This meta tag sets the viewport width to the device width and initial zoom level to 1, ensuring that the web page is responsive and displays properly on various devices and screen sizes.
+<div class="overlay" id="overlay"></div>  =  This line creates a div element with the class "overlay" and an ID "overlay". This div serves as a semi-transparent background covering the entire page when the pop-up is displayed.
 
-<title>Android-style Calculator</title>  =  This line sets the title of the web page, which appears on the browser tab when the page is open.
+<div class="popup-container" id="popup">  =  This line creates another div element with the class "popup-container" and an ID "popup". This div contains the survey form and other elements displayed as a pop-up on the webpage.
 
-<style>  =  The <style> tag is used to define internal CSS styles for the document.
+<span class="close-btn" onclick="closePopup()">X</span>  =  This line creates a span element with the class "close-btn" and sets an onclick attribute to call the closePopup() function when clicked. It displays an 'X' symbol to allow users to close the pop-up.
 
-.calculator
-{
-    /* Styles for the calculator container */
-    width: 320px;
-    margin: 50px auto;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    background-color: #f7f7f7;
-    padding: 10px;
-    font-family: 'Arial', sans-serif;
-}  =  This block of CSS code styles the calculator container. It specifies the width, margin, border, border-radius, background color, padding, and font-family for the calculator. The calculator will be centered (margin: 50px auto;) and have a light gray border with rounded corners.
+<h2>Survey Form</h2>  =  This line displays a heading inside the pop-up indicating that it's a survey form.
 
-.row
-{
-    /* Styles for each row of buttons */
-    display: flex;
-    justify-content: space-between;
-}  =  This CSS code defines the style for each row of buttons. It uses flexbox (display: flex;) to arrange the buttons in a row with space between them (justify-content: space-between;).
+<label for="firstName">First Name:</label>
+<input type="text" id="firstName">  =  These lines create a label and an input field for the user's first name. The for attribute in the label associates it with the input field for better accessibility.
 
-input[type="button"]
-{
-    /* Common styles for all buttons */
-    width: 70px;
-    height: 70px;
-    font-size: 24px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}  =  This CSS code sets the common styles for all buttons. It defines the width, height, font size, margin, border, border-radius, and cursor. All buttons will have a width and height of 70px, a font size of 24px, a margin of 5px, no border, rounded corners, and a pointer cursor.
+<button type="button" class="submit-btn" onclick="submitForm()">Submit</button>
+<button type="button" class="reset-btn" onclick="resetForm()">Reset</button>  =  These lines create buttons for submitting the form and resetting the form data. They are styled with classes "submit-btn" and "reset-btn" respectively. The onclick attributes call the submitForm() and resetForm() functions when the buttons are clicked.
 
-.primary
-{
-    /* Styles for number buttons */
-    background-color: #e0e0e0;
-    color: #333;
-}  =  This CSS code styles the number buttons with a light gray background and dark gray text.
+<style>
+    /* CSS styles for overlay, pop-up container, form elements, and buttons */
+</style>  =  This section contains CSS styles to define the appearance of various elements on the webpage, including the overlay, pop-up container, form elements, and buttons.
 
-
-.operator
-{
-    /* Styles for operator buttons */
-    background-color: #ff9500;
-    color: #fff;
-}  =  This CSS code styles the operator buttons (such as +, -, *, /) with an orange background and white text.
-
-
-.equal
-{
-    /* Styles for the equal button */
-    background-color: #ff3b30;
-    color: #fff;
-}  =  This CSS code styles the equal button (=) with a red background and white text.
-
-
-.zero
-{
-    /* Styles for the zero button */
-    width: 150px;
-}  =  This CSS code styles the zero button, giving it a larger width of 150px compared to other number buttons
-  
-
-</style>
-</head>
-<body>  =  Closing the <style> tag and opening the <body> tag. The <body> section contains the visible content of the web page.
-
-<div class="calculator">  =  This line creates a <div> element with a class of "calculator". This div serves as the container for the entire calculator.
-
-
-<input type="text" id="result" readonly>  =  This line creates an <input> element with a type of "text" and an id of "result". This input field is where the numbers, operators, and results are displayed. The readonly attribute ensures that users cannot edit the input directly.
-
-
-<div class="row">  =   This line creates a <div> element with a class of "row". This div represents a row of buttons
-
-<input type="button" value="7" onclick="addToResult(7)" class="primary">  =  This line creates a number button for the digit 7. When clicked, it calls the addToResult(7) JavaScript function. The button has a class of "primary", so it will be styled according to the .primary CSS rules.
-
-
-<input type="button" value="8" onclick="addToResult(8)" class="primary">  =  Similar to the previous line, this creates a button for the digit 8.
-
-
-<input type="button" value="9" onclick="addToResult(9)" class="primary">  =  Similar to the previous lines, this creates a button for the digit 9.
-
-<input type="button" value="/" onclick="addToResult('/')" class="operator">  =  This line creates a division operator button (/). When clicked, it calls the addToResult('/') function. The button has a class of "operator", so it will be styled according to the .operator CSS rules.
-
-<script>  =  Opening the <script> tag to include JavaScript code.
-
-function addToResult(value)
-{
-    // This function appends the given value to the display
-}  =  This JavaScript function, addToResult(value), is declared. It is used to add the clicked button's value to the display.
-
-function calculateResult()
-{
-     This function evaluates the expression in the display and displays the result
-}  =  This JavaScript function, calculateResult(), is declared. It is used to evaluate the expression in the display and display the result.
-
-function clearResult()
-{
-    // This function clears the display
-}  =  This JavaScript function, clearResult(), is declared. It is used to clear the display when the C button is clicked.
-
-</script>
-</body>
-</html>
-      Closing the <script> tag and the <body> tag, and ending the HTML document.
+ipt>
+    // JavaScript functions for opening, closing, submitting, and resetting the form
+</script> =  This section contains JavaScript code with functions that handle the pop-up behavior. These functions include openPopup(), closePopup(), submitForm(), resetForm(), and newResponse(). They control the visibility of the pop-up, handle form submission, and reset form data.
